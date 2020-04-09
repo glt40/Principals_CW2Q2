@@ -6,18 +6,22 @@ import java.util.Scanner;
 
 public class Quicksort {
 
-    // Initialise
+    // Initialise fields
     private List<String> lst_names;
     private String filename;
 
     /**
-     * Constructor to assign fields
+     * Constructor to assign values
      */
     public Quicksort() {
         lst_names = new ArrayList<String>();
         filename = "names2.txt";
     }
 
+    /**
+     * Puts some values in the List, either from a file of Strings separated by spaces, or a few hardcoded names
+     * If reading the file throws an exception, those hardcoded names are added. Give all strings in UPPERCASE
+     */
     private void lst_populate() {
         // Open up the file for reading
         try {
@@ -27,7 +31,7 @@ public class Quicksort {
             }
             s.close();
         } catch (FileNotFoundException e) {
-            System.out.println("File not read, adding temporary values instead.");
+            System.out.println("File not found, adding temporary values instead.");
             lst_names.add("GEMMA");
             lst_names.add("GEM");
             lst_names.add("WILL");
@@ -42,6 +46,9 @@ public class Quicksort {
         }
     }
 
+    /**
+     * Prints out each Object in a List
+     */
     private void lst_print() {
         for (Object lst_name : lst_names) {
             System.out.println(lst_name);
@@ -91,9 +98,13 @@ public class Quicksort {
         list.set(j, tmp);
     }
 
+    /**
+     * The quicksort works with a "divide and conquer" method and calls itself recursively
+     */
     private void lst_quicksort(List<String> list, int start, int end) {
         int i = start;
         int j = end;
+        // Only try to sort a list if it's larger than one element
         if (j - i >= 1) {
             String pivot = list.get(i);
             while (j > i) {
@@ -107,6 +118,7 @@ public class Quicksort {
                     lst_swap_el(list, i, j);
             }
             lst_swap_el(list, start, j);
+            // Call recursively for the two halves of the list
             lst_quicksort(list, start, j - 1);
             lst_quicksort(list, j + 1, end);
         }
@@ -127,7 +139,7 @@ public class Quicksort {
     }
 
     /**
-     * Main method creates a new Quicksort object
+     * Main method creates a new Quicksort object and calls the run() method
      */
     public static void main(String[] args) {
         Quicksort sort = new Quicksort();
